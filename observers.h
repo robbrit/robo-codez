@@ -9,6 +9,9 @@
 
 #include "list.h"
 
+// These functions implement an observer pattern.
+// TODO: convert this stuff to C++, will be nicer to use
+
 typedef void(*observer)();
 
 void observers_add(unsigned int what, observer obs);

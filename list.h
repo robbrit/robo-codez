@@ -9,6 +9,7 @@
 
 #include <stdlib.h> // for malloc
 
+// This class implements a singly-linked list for a given data type.
 template <class T>
 class list {
   class node {
@@ -18,6 +19,8 @@ class list {
   };
   node * root;
 public:
+  // Iterator class, follows the standard C++ convention but does not support
+  // backtracking (the -- operator);
   class iterator {
     node * current;
   public:
@@ -49,15 +52,6 @@ public:
 
   iterator end(){
     return iterator(0);
-  }
-
-  // iterates over the list
-  void foreach(iterator it){
-    node * current = root;
-    while (current != 0){
-      it(current->obj);
-      current = current->next;
-    }
   }
 
   // adds a new object to the front of the list
