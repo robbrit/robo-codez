@@ -4,11 +4,15 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://sam.zoy.org/wtfpl/COPYING for more details. */
 
-#include "data_structures.h"
+#ifndef OBSERVERS_H
+#define OBSERVERS_H
 
-typedef void(*observer)(void *);
+#include "list.h"
 
-void observers_init();
+typedef void(*observer)();
+
 void observers_add(unsigned int what, observer obs);
 void observers_remove(unsigned int what, observer obs);
-void observers_trigger(unsigned int what, void * param);
+void observers_trigger(unsigned int what);
+
+#endif // OBSERVERS_H

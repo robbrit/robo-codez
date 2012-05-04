@@ -10,10 +10,10 @@ const int OBS_100MS  = 0;
 const int OBS_500MS  = 1;
 const int OBS_1000MS = 2;
 
-bool light_on = false;
+int light_on = 0;
 const int LIGHT_PORT = 2;
 
-void light(void * param){
+void light(){
   if (light_on){
     digitalWrite(LIGHT_PORT, LOW);
   } else {
@@ -23,8 +23,6 @@ void light(void * param){
 }
 
 void setup(){
-  observers_init();
-
   observers_add(OBS_1000MS, light);
 }
 
@@ -37,15 +35,15 @@ void loop(){
   loop_counter++;
 
   if (loop_counter % 5 == 0){
-    observers_trigger(OBS_500MS, NULL);
+    observers_trigger(OBS_500MS);
   }
 
   if (loop_counter == 10){
     loop_counter = 0;
-    observers_trigger(OBS_1000MS, NULL);
+    observers_trigger(OBS_1000MS);
   }
 
-  observers_trigger(OBS_100MS, NULL);
+  observers_trigger(OBS_100MS);
 
   delay(100);
 }
