@@ -11,7 +11,9 @@ const int OBS_500MS  = 1;
 const int OBS_1000MS = 2;
 
 int light_on = 0;
+
 const int LIGHT_PORT = 2;
+const int SENSOR_PORT = 4;
 
 void light(){
   if (light_on){
@@ -22,8 +24,37 @@ void light(){
   light_on = !light_on;
 }
 
+void sense(){
+  pinMode(SENSOR_PORT, OUTPUT);
+  // trigger sensor by sending low then 10uS high
+  digitalWrite(SENSOR_PORT, LOW);
+  delayMicroseconds(2);
+  digitalWrite(SENSOR_PORT, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(SENSOR_PORT, LOW);
+
+  // wait while we're receiving low
+  pinMode(SENSOR_PORT, INPUT);
+  int val = digitalRead(SENSOR_PORT);
+  while (val == LOW){
+    val = digitalRead(SENSOR_PORT);
+  }
+
+  // the sensor will deliver a high pulse for a certain amount of time
+  // representing how far away things are
+  long time = micros();
+  while (val == HIGH){
+    val = digitalRead(SENSOR_PORT);
+  }
+  int dist = (micros() - time) / 58;
+
+  Serial.println(dist);
+}
+
 void setup(){
+  Serial.begin(9600);
   observers_add(OBS_1000MS, light);
+  observers_add(OBS_1000MS, sense);
 }
 
 // Loop management: don't do anything here, if you want to have an action
