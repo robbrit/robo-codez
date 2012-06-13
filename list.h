@@ -56,9 +56,10 @@ public:
 
   // adds a new object to the front of the list
   void push(T obj){
-    root = (node *)malloc(sizeof(node));
-    root->obj = obj;
-    root->next = 0;
+    node * n = (node *)malloc(sizeof(node));
+    n->obj = obj;
+    n->next = root;
+    root = n;
   }
 
   // removes an object from the list

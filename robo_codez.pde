@@ -54,7 +54,7 @@ void sense(){
 void setup(){
   Serial.begin(9600);
   observers_add(OBS_1000MS, light);
-  observers_add(OBS_1000MS, sense);
+  observers_add(OBS_500MS, sense);
 }
 
 // Loop management: don't do anything here, if you want to have an action
